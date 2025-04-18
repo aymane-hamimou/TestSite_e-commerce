@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ProductPage {
-    //                                                    factory page
+    //                                                      factory page
     @FindBy(xpath = "//select[@data-test='product-sort-container']")
     private WebElement filterButton;
     @FindBy(xpath = "//option[@value='lohi']")
@@ -18,7 +18,7 @@ public class ProductPage {
     @FindBy(xpath = "//div[@class='inventory_item_price']")
     private List<WebElement> listprice;
     WebDriver driver;
-    @FindBy(xpath = "//*[@id=\"add-to-cart-sauce-labs-bike-light\"]")
+    @FindBy(css = "#add-to-cart-sauce-labs-bike-light")
     private WebElement addToCartBikeLight ;
 
     public ProductPage(WebDriver driver) {
@@ -34,6 +34,10 @@ public class ProductPage {
         filterButton.click();
         filterLoHi.click();
     }
+    public void clickAddToCartBikeLight (){
+        addToCartBikeLight.click();
+    }
+
     public boolean isListInOrder(){
         //list string vide ou on va récupérer tous les élement de Webelement
         List<String> listVide = new ArrayList<>();
@@ -54,8 +58,7 @@ public class ProductPage {
         }
         return true;
     }
-    public void clickAddToCartBikeLight (){
-        addToCartBikeLight.click();
-    }
+
+
 
 }

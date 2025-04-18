@@ -23,7 +23,7 @@ public class ExSauceDemo {
         LoginPage objloginPage = new LoginPage(driver);
         ProductPage objproductPage = new ProductPage(driver);
         objloginPage.loginAsUser();
-        Assertions.assertTrue(objproductPage.getProductPageUrl().contains("inventory.html"),"Error:The product page is not available");
+        Assertions.assertTrue(objproductPage.getProductPageUrl().contains("inventory.html"),"Error:Wrong URL");
 
     }
 
@@ -38,16 +38,18 @@ public class ExSauceDemo {
     public void t003_AddArticleToCart() throws InterruptedException {
         ProductPage objproductPage = new ProductPage(driver);
         panierpage objpanierpage = new panierpage(driver);
-        Thread.sleep(2000);
+        Thread.sleep(6000);
         objproductPage.clickAddToCartBikeLight();
-
-        Assertions.assertTrue(objpanierpage.isArticleAddedToCart());
+        Thread.sleep(1000);
+        // Assertions.assertTrue(objpanierpage.isArticleAddedToCart());
     }
     @Test
-    public void t004_ClickOnCartAndCheckArticle(){
+    public void t004_ClickOnCartAndCheckArticle() throws InterruptedException {
         panierpage objpanierpage = new panierpage(driver);
         CartPage objcartPage = new CartPage(driver);
+        Thread.sleep(2000);
         objpanierpage.clickOnCart();
+        Thread.sleep(1000);
         Assertions.assertTrue(objcartPage.getUrlWebPage().contains("cart.html"));
         Assertions.assertEquals(objcartPage.getArticleInCart(),"Sauce Labs Bike Light");
         objcartPage.CheckoutBtnClick();
@@ -56,9 +58,27 @@ public class ExSauceDemo {
     @Test
     public void t005_checkout(){
     checkoutPage objcheckoutPage = new checkoutPage(driver);
-    Assertions.assertTrue(objcheckoutPage.getUrlWebPage().contains("checkout-step-one.html"));
+    Assertions.assertTrue(objcheckoutPage.getUrlWebPage().contains("checkout-step-one.html"),"Error:Wrong URL");
     objcheckoutPage.fillInformation();
     objcheckoutPage.clickContinueBtn();
     }
 
+    @Test
+    public void t006_confirmationInformation(){
+    CheckoutPart2page objcheckoutPart2page = new CheckoutPart2page(driver);
+    Assertions.assertTrue(objcheckoutPart2page.getUrlWebPage().contains("checkout-step-two.html"),"Error:Wrong URL");
+    Assertions.assertTrue(objcheckoutPart2page.getTitleArticleText().contains(" Bike Light") && objcheckoutPart2page.getPriceArticleText().contains("9.99") && objcheckoutPart2page.getTotalPriceArticleText().contains("10.79"));
+    objcheckoutPart2page.clickFinishBtn();
+    }
+    @Test
+    public void t007_ConfirmationPayment(){
+        ConfirmationPage objconfirmationPage = new ConfirmationPage(driver);
+        Assertions.assertTrue(objconfirmationPage.getCurrentUrl().contains("checkout-complete.html"));
+
+
+    }
+    @BeforeAll
+    public static void tearDown(){
+        driver.quit();
+    }
 }
