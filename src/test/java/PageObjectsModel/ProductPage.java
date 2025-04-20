@@ -4,7 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,7 +37,9 @@ public class ProductPage {
         filterButton.click();
         filterLoHi.click();
     }
-    public void clickAddToCartBikeLight (){
+    public void clickAddToCartBikeLight (WebDriver driver){
+        this.driver = driver;
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(addToCartBikeLight));
         addToCartBikeLight.click();
     }
 
